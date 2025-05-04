@@ -1,0 +1,129 @@
+{% extends "../core/base/base_other.html" %}
+{% load static %}
+{% block contents %}
+
+	<!-- Start main-content -->
+	<section class="page-title" style="background-image: url({% static 'images/background/page-title-bg.png' %});">
+		<div class="auto-container">
+			<div class="title-outer text-center">
+				<h1 class="title">FAQ</h1>
+				<ul class="page-breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="#">Pages</a></li>
+					<li>FAQ</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!-- end main-content -->
+  <!-- FAQ Section -->
+<section class="faqs-section-home1 mt-0 pt-120 pb-60 pb-md-20" style="background-image: url(./{% static 'images/background/1.jpg' %})">
+  <div class="auto-container">
+    <div class="row"> 
+      <!-- FAQ Column -->
+      <div class="faq-column col-lg-6">
+        <div class="inner-column">
+          <ul class="accordion-box style-two wow fadeInLeft">
+            <!--Block-->
+            <li class="accordion block active-block">
+              <div class="acc-btn active">What is the check-in and check-out time?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content current">
+                <div class="content">
+                  <div class="text">Check-in begins at 2:00 PM and check-out is by 12:00 PM. Early check-in or late check-out may be arranged subject to availability.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block">
+              <div class="acc-btn">What is your cancellation policy?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content">
+                  <div class="text">Free cancellation up to 48 hours before arrival. Cancellations within 48 hours incur a one-night fee. No-show charges apply.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block">
+              <div class="acc-btn">Do you offer airport transfers?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content">
+                  <div class="text">Yes, we provide private airport pickup and drop-off services for an additional fee. Advance booking is required.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block">
+              <div class="acc-btn">Are pets allowed in the hotel?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content">
+                  <div class="text">We welcome small pets (up to 10 kg) in designated rooms. A non-refundable pet fee applies. Please notify us at booking.</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- FAQ Column -->
+      <div class="faq-column col-lg-6">
+        <div class="inner-column mb-md-50">
+          <ul class="accordion-box style-two bg-transparent p-0 wow fadeInLeft">
+            <!--Block-->
+            <li class="accordion block active-block pl-30 pr-30">
+              <div class="acc-btn border-bottom-0 active">Do you have on-site dining options?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content current">
+                <div class="content border-bottom-0 pt-0">
+                  <div class="text">Our restaurant serves breakfast, lunch, and dinner daily. We also offer in-room dining from 6 AM to 11 PM with a curated menu.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block pl-30 pr-30">
+              <div class="acc-btn border-bottom-0">Is Wi-Fi complimentary?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content border-bottom-0 pt-0">
+                  <div class="text">High-speed Wi-Fi is free throughout the property, including guest rooms and public areas.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block pl-30 pr-30">
+              <div class="acc-btn border-bottom-0">What wellness facilities do you offer?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content border-bottom-0 pt-0">
+                  <div class="text">Enjoy our spa center with massage therapy, sauna, and steam bath, plus a 24-hour fitness center equipped with the latest machines.</div>
+                </div>
+              </div>
+            </li>
+            <!--Block-->
+            <li class="accordion block pl-30 pr-30">
+              <div class="acc-btn border-bottom-0">Is parking available on-site?
+                <div class="icon fa fa-plus"></div>
+              </div>
+              <div class="acc-content">
+                <div class="content border-bottom-0 pt-0">
+                  <div class="text">Complimentary valet and self-parking are available for hotel guests. Space is limited; please reserve your spot in advance.</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--End FAQ Section -->
+  	{% endblock contents %} 

@@ -1,0 +1,672 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Vertus  - Hotel And Suit</title>
+	<!-- Stylesheets -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+	<link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+	<!-- Responsive -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<body>
+<div class="page-wrapper">
+  
+	<!-- Preloader -->
+	<div class="preloader"></div>
+
+  <!-- Main Header-->
+	<header class="main-header header-style-two">
+    <div class="auto-container">
+      <div class="header-top">
+        <div class="inner-box">
+          <!-- top-left -->
+          <div class="top-left">
+            <span><i class="icon fa fa-location"></i>28 Akhionbare St, off Ihama Road, GRA, Benin City</span>
+          </div>
+          <!-- Top-right -->
+          <div class="top-right">
+            <ul class="social-icon-one">
+              <li>Follow Us :</li>
+              <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fab fa-x-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Main box -->
+      <div class="main-box">
+        <div class="logo-box">
+          <div class="logo"><a href="index.html"><img src="{% static 'images/logo-2.png' %}" alt="" title="Hoteler"></a></div>
+        </div>
+        <!--Nav Box-->
+        <div class="nav-outer">
+          <nav class="nav main-menu">
+            <ul class="navigation">
+              <li><a href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="dropdown"><a href="#">Rooms & Suites</a>
+                <ul>
+                  <li><a href="{% url 'rooms' %}">Rooms</a></li>
+                </ul>
+              </li>
+                  <li><a href="{% url 'about' %}">About</a></li>
+                  <li><a href="{% url 'faq' %}">Faq</a></li>
+                  <li class="dropdown"><a href="#">Services</a>
+                    <ul>
+                      <li><a href="{% url 'services' %}">Services</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                    </ul>
+                  </li>
+              <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+          </nav>
+          <!-- Main Menu End-->
+        </div>
+        <div class="outer-box">
+          <button class="search-btn">
+            <img src="{% static 'images/icons/search.png' %}" alt="" />
+          </button>
+          <div class="mobile-nav-toggler"><i class="icon fa fa-bars"></i></div>
+          <!-- Mobile Nav toggler -->
+        </div>
+      </div>
+      <!-- Mobile Menu  -->
+      <div class="mobile-menu">
+        <div class="menu-backdrop"></div>
+        <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+        <nav class="menu-box">
+          <div class="upper-box">
+            <div class="nav-logo"><a href="index.html"><img src="{% static 'images/logo.png' %}" alt=""></a></div>
+            <div class="close-btn"><i class="icon fa fa-times"></i></div>
+          </div>
+          <ul class="navigation clearfix">
+            <!--Keep This Empty / Menu will come through Javascript-->
+          </ul>
+          <ul class="contact-list-one">
+            <li>
+              <!-- Contact Info Box -->
+              <div class="contact-info-box">
+                <i class="icon lnr-icon-phone-handset"></i>
+                <span class="title">Call Now</span>
+                <a href="tel:+92880098670">+92 (8800) - 98670</a>
+              </div>
+            </li>
+            <li>
+              <!-- Contact Info Box -->
+              <div class="contact-info-box">
+                <span class="icon lnr-icon-envelope1"></span>
+                <span class="title">Send Email</span>
+                <a href="/cdn-cgi/l/email-protection#d3bbb6bfa393b0bcbea3b2bdaafdb0bcbe"><span class="__cf_email__" data-cfemail="7b131e170b3b1814160b1a150255181416">[email&#160;protected]</span></a>
+              </div>
+            </li>
+            <li>
+              <!-- Contact Info Box -->
+              <div class="contact-info-box">
+                <span class="icon lnr-icon-clock"></span>
+                <span class="title">Send Email</span>
+                Mon - Sat 8:00 - 6:30, Sunday - CLOSED
+              </div>
+            </li>
+          </ul>
+          <ul class="social-links">
+            <li><a href="#"><i class="fab fa-x-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+        </nav>
+      </div><!-- End Mobile Menu -->
+      <!-- Header Search -->
+      <div class="search-popup">
+        <span class="search-back-drop"></span>
+        <button class="close-search"><span class="fa fa-times"></span></button>
+        <div class="search-inner">
+          <form method="post" action="index.html">
+            <div class="form-group">
+              <input type="search" name="search-field" value="" placeholder="Search..." required="">
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- End Header Search -->
+
+      <!-- Sticky Header  -->
+      <div class="sticky-header">
+        <div class="auto-container">
+          <div class="inner-container">
+            <!--Logo-->
+            <div class="logo">
+              <a href="index.html"><img src="{% static 'images/logo-2.png' %}" alt=""></a>
+            </div>
+            <!--Right Col-->
+            <div class="nav-outer">
+              <!-- Main Menu -->
+              <nav class="main-menu">
+                <div class="navbar-collapse show collapse clearfix">
+                  <ul class="navigation clearfix">
+                    <!--Keep This Empty / Menu will come through Javascript-->
+                  </ul>
+                </div>
+              </nav><!-- Main Menu End-->
+              <!--Mobile Navigation Toggler-->
+              <div class="mobile-nav-toggler"><span class="icon lnr-icon-bars"></span></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Sticky Menu -->
+    </div>
+	</header>
+	<!--End Main Header -->
+
+	<!-- Start main-content -->
+	<section class="page-title" style="background-image: url({% static 'images/background/page-title-bg.png' %});">
+		<div class="auto-container">
+			<div class="title-outer text-center">
+				<h1 class="title">Room Details</h1>
+				<ul class="page-breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li>Room Details</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!-- end main-content -->
+
+	<!--Room Details Start-->
+	<section class="blog-details pt-120 pb-120">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-8 col-lg-7 product-details rd-page">
+				<div class="bxslider">
+				<div class="slider-content">
+					<figure class="image-box">
+					{% if image_data %}
+						<a href="{{ image_data }}" class="lightbox-image" data-fancybox="gallery">
+						<img src="{{ image_data }}" alt="{{ room.name }}">
+						</a>
+					{% else %}
+						{# Fallback to a static placeholder if no image is available #}
+						<a href="{% static 'images/resource/room-1.jpg' %}" class="lightbox-image" data-fancybox="gallery">
+						<img src="{% static 'images/resource/room-1.jpg' %}" alt="{{ room.name }}">
+						</a>
+					{% endif %}
+					</figure>
+				</div>
+				</div>
+					<div class="room-details__left">
+					    <div class="wrapper">
+							<h3>Description of Room</h3>
+							<p class="text">{{ room.description }}</p>
+
+							<div class="row justify-content-center">
+							<div class="col-xl-12">
+								<div class="room-details__content-right mb-40 mt-20">
+								<div class="room-details__details-box">
+									<div class="row">
+									<div class="col-6 col-md-3">
+										<p class="text mb-0">Room Size</p>
+										<h6>{{ room.size }}</h6>
+									</div>
+									<div class="col-6 col-md-3">
+										<p class="text mb-0">Rooms Bed</p>
+										<h6>{{ room.bed_type }}</h6>
+									</div>
+									<div class="col-6 col-md-3">
+										<p class="text mb-0">Occupancy</p>
+										<h6>{{ room.occupancy }}</h6>
+									</div>
+									<div class="col-6 col-md-3">
+										<p class="text mb-0">Category</p>
+										<h6>{{ room.get_name_display }}</h6>
+									</div>
+									</div>
+								</div>
+								</div>
+							</div>
+							</div>
+
+							
+						</div>
+						<div class="mt-40">
+							<h4 class="mb-3">Room Facilities</h4>
+							<div class="row room-facility-list mb-40">
+							{% for facility in room_facilities %}
+								<div class="col-sm-6 col-xl-4">
+								<div class="list-one d-flex align-items-center me-sm-4 mb-3">
+									<h6 class="title m-0">{{ facility.name }}</h6>
+								</div>
+								</div>
+							{% endfor %}
+							</div>
+						</div>
+					
+						<div class="p-4 p-lg-5 bg-light">
+							<h4 class="mt-0">Send Us Your Question</h4>
+							<form id="contact_form" name="contact_form" action="" method="post">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-sm-6 col-xl-4">
+								<div class="mb-3">
+									<input name="name" class="form-control bg-white" type="text" placeholder="Enter Name" required>
+								</div>
+								</div>
+								<div class="col-sm-6 col-xl-4">
+								<div class="mb-3">
+									<input name="email" class="form-control bg-white" type="email" placeholder="Enter Email" required>
+								</div>
+								</div>
+								<div class="col-xl-4">
+								<div class="mb-3">
+									<input name="phone" class="form-control bg-white" type="tel" placeholder="Enter Phone" required>
+								</div>
+								</div>
+							</div>
+							<div class="mb-3">
+								<textarea name="message" class="form-control bg-white" rows="5" placeholder="Enter Message" required></textarea>
+							</div>
+							<div class="mb-0">
+								<button type="submit" class="theme-btn btn-style-one" data-loading-text="Please wait...">
+								<span class="btn-title">Submit Comment</span>
+								</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-lg-5">
+					<div class="sidebar">
+						<div class="sidebar__post mb-30">
+							<form id="contact_form2" name="contact_form" action="" method="post">
+								   {% csrf_token %}
+								<div class="row">
+									<div class="mb-3">
+									<div class="mb-3">
+									     <label class="form-label">Name</label>
+										<input type="text" class="form-control bg-white"  id="name" name="name" placeholder="Your Name" required>
+									</div>
+									<div class="mb-3">
+									    <label class="form-label">Email</label>
+										<input type="email" class="form-control bg-white"  id="email"  name="email" placeholder="Email Address" required>
+									</div>
+										<div class="mb-3">
+											<label class="form-label">Check In</label>
+											<input type="date" name="check_in" id="check_in" class="form-control bg-white" placeholder="Arrive Date" required>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="mb-3">
+											<label class="form-label">Check Out</label>
+											<input type="date" name="check_out" id="check_out" class="form-control bg-white" placeholder="Departure Date" required>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="mb-3">
+											<label class="form-label">Guests</label>
+											<select class="form-select form-control bg-white" name="guests" id="guests" required>
+												<option selected disabled value="">Select</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="More">More</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+    <!-- Hidden Room Type Input -->
+    <input type="hidden" name="room_type" id="room_type" value="{{ room.name }}"> <!-- Default value or can be dynamically set -->
+
+    <div class="mb-3">
+        <button type="submit" class="theme-btn btn-style-one w-100" data-loading-text="Please wait..."><span class="btn-title">Book Now</span></button>
+    </div>
+</form>
+						</div>
+				<div class="sidebar__single sidebar__post">
+					<h3 class="sidebar__title">Compare Room</h3>
+					<ul class="sidebar__post-list list-unstyled">
+						{% for other in other_rooms %}
+						<li>
+							<div class="sidebar__post-image">
+							{% if other.image %}
+								<a href="{% url 'room_details' other.id %}">
+								<img src="{{ other.image.url }}" alt="{{ other.get_name_display }}">
+								</a>
+							{% else %}
+								<a href="{% url 'room_details' other.id %}">
+								<img src="{% static 'images/resource/default_room.jpg' %}" alt="{{ other.get_name_display }}">
+								</a>
+							{% endif %}
+							</div>
+							<div class="sidebar__post-content">
+							<h3>
+								<span class="sidebar__post-content-meta">
+								<i class="fas fa-door-open"></i>{{ other.get_name_display }}
+								</span>
+								<a href="{% url 'room_details' other.id %}">
+								${{ other.price_per_night }}/Night
+								</a>
+							</h3>
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+                   </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--Room Details End-->
+ <!-- Main Footer -->
+  <footer class="main-footer footer-style-one">
+    <!-- Widgets Section -->
+    <div class="widgets-section">
+      <div class="auto-container">
+        <div class="row">
+          <!-- Footer Column -->
+          <div class="footer-column col-lg-4 col-sm-6">
+            <div class="footer-widget about-widget wow fadeInLeft">
+              <div class="widget-content">
+                <div class="logo"><a href="#"> <img src="{% static 'images/logo.png' %}" alt=""></a></div>
+                <div class="text mb-0">Feel free to reach out if you want collaborate with us, or simply chat.</div>
+              </div>
+            </div>
+            <div class="footer-widget news-widget wow fadeInLeft" data-wow-delay="400ms">
+              <div class="subscribe-form-three">
+                <form method="post" action="#">
+                  <div class="form-group">
+                    <input type="email" name="email" class="email" value="" placeholder="Email Address" required="">
+                    <button type="button" class="theme-btn btn-style-one"><span class="btn-title"><i class="fa fa-paper-plane"></i></span></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="footer-widget widget-social wow fadeInLeft" data-wow-delay="300ms">
+              <h4 class="widget-title">Follow Us</h4>
+              <div class="widget-content">
+                <ul class="social-icon">
+                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                  <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                  <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </nav>
+          <!-- Footer Column -->
+          <div class="footer-column col-lg-3 col-sm-6 mb-0 ps-xl-5">
+            <div class="footer-widget links-widget ps-xl-5 wow fadeInLeft" data-wow-delay="200ms">
+              <h4 class="widget-title">Services</h4>
+              <div class="widget-content">
+                <ul class="user-links">
+                  <li><a href="{% url 'rooms' %}">Rooms</a></li>
+                  <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                    <li><a href="{% url 'services' %}">Suites</a></li>
+                  
+                </ul>
+              </div>
+            </div>                       
+          </div>
+          <!-- Footer Column -->
+          <div class="footer-column col-lg-2 col-sm-6 mb-0 ps-xl-4">
+            <div class="footer-widget links-widget ps-xl-4 wow fadeInLeft" data-wow-delay="200ms">
+              <h4 class="widget-title">Company</h4>
+              <div class="widget-content">
+                <ul class="user-links">
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                  <li><a href="{% url 'about' %}">About Us</a></li>
+                  <li><a href="{% url 'contact' %}">Contact</a></li>
+                  <li><a href="{% url 'faq' %}">Faq</a></li>
+                </ul>
+              </div>
+            </div>                       
+          </div>
+          <!-- footer column -->
+          <div class="footer-column col-lg-3 col-sm-6">
+            <div class="footer-widget info-widget ps-xl-5 ms-xl-5 mb-30 wow fadeInLeft" data-wow-delay="300ms">
+              <h4 class="widget-title">Nigeria</h4>
+              <div class="widget-content">
+                <!-- Contact List -->
+                <div class="contact-list">
+                  <div class="inner">
+                    <div class="list-info">28 Akhionbare St, off Ihama Road, GRA, Benin City 300102, Edo State</div>
+                    <div class="list-info">(000) 222-0000</div>
+                    <div class="list-info">info@Vertushotelsuits.com</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="auto-container">
+        <div class="inner-container">
+          <div class="copyright-text">© 2025 <span>Vertushotelsuits.com</span></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--End Main Footer -->
+  
+  <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-up"></span></div>
+
+ 
+
+
+<style>
+  /* Full-screen overlay */
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  /* Gold-topped spinner */
+  .spinner {
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    border-top: 8px solid #FFD700; /* Gold */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+
+
+</div><!-- End Page Wrapper -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/slick-animation.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/wow.js' %}"></script>
+<script src="{% static 'js/appear.js' %}"></script>
+<script src="{% static 'js/bxslider.js' %}"></script>
+<script src="{% static 'js/owl.js' %}"></script>
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<!-- form submit -->
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/jquery.form.min.js' %}"></script>
+
+
+<!-- Full-screen overlay with spinner -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- Toastify CSS & JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+  (function(){
+    const form      = document.getElementById('contact_form2');
+    const overlay   = document.getElementById('loading-overlay');
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Show overlay + spinner
+      overlay.style.display = 'flex';
+
+      // Gather form data
+      const data = {};
+      new FormData(form).forEach((v,k) => data[k] = v);
+
+      try {
+        const res = await fetch("{% url 'contacts_view' %}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify(data)
+        });
+
+        // Check for JSON content-type
+        const contentType = res.headers.get('content-type') || '';
+        let json;
+        if (contentType.includes('application/json')) {
+          json = await res.json();
+        } else {
+          // Dump raw response for debugging
+          const text = await res.text();
+          console.error('Expected JSON, got:', text);
+          throw new Error('Server returned non-JSON response');
+        }
+
+        // Hide spinner
+        overlay.style.display = 'none';
+
+        // Pick toast background
+        const bg = json.success
+          ? "linear-gradient(to right, #D4AF37, #AE7D54)"    // gold → amber
+          : "linear-gradient(to right, #800020, #C04000)";   // burgundy → dark orange
+
+        Toastify({
+          text: json.success ? json.message : (json.error || 'An error occurred.'),
+          duration: 4000,
+          gravity: "top",
+          position: 'right',
+          backgroundColor: bg,
+          stopOnFocus: true
+        }).showToast();
+
+        if (json.success) form.reset();
+
+      } catch (err) {
+        // Hide spinner
+        overlay.style.display = 'none';
+
+        Toastify({
+          text: err.message.includes('non-JSON')
+            ? 'Server error: unexpected response.'
+            : 'Server error, please try again.',
+          duration: 4000,
+          gravity: "top",
+          position: 'right',
+          backgroundColor: "linear-gradient(to right, #800020, #C04000)"
+        }).showToast();
+
+        console.error(err);
+      }
+    });
+  })();
+</script>
+
+
+<script>
+(function(){
+  const form = document.getElementById('contact_form');
+  const overlay = document.getElementById('loading-overlay');
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    overlay.style.display = 'flex';
+
+    const data = {};
+    new FormData(form).forEach((v,k) => data[k]=v);
+
+    try {
+      const res = await fetch("{% url 'submit_comment' %}", {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'X-CSRFToken':csrftoken
+        },
+        body: JSON.stringify(data)
+      });
+      const ct = res.headers.get('content-type')||'';
+      if(!ct.includes('application/json')){
+        const text = await res.text();
+        console.error('Expected JSON, got:', text);
+        throw new Error('Unexpected response');
+      }
+      const json = await res.json();
+      overlay.style.display = 'none';
+
+      const bg = json.success
+        ? "linear-gradient(to right, #D4AF37, #AE7D54)"
+        : "linear-gradient(to right, #800020, #C04000)";
+
+      Toastify({
+        text: json.success ? json.message : (json.error||'Error'),
+        duration:4000,
+        gravity:'top', position:'right',
+        backgroundColor:bg, stopOnFocus:true
+      }).showToast();
+
+      if(json.success) form.reset();
+    } catch(err){
+      overlay.style.display = 'none';
+      Toastify({
+        text: err.message.includes('Unexpected') 
+          ? 'Server returned an unexpected response.' 
+          : 'Server error, please try again.',
+        duration:4000,
+        gravity:'top', position:'right',
+        backgroundColor:"linear-gradient(to right, #800020, #C04000)"
+      }).showToast();
+      console.error(err);
+    }
+  });
+})();
+</script>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% extends "../core/base/base_other.html" %}
+{% load static %}
+{% block contents %}
+
+	<!-- Start main-content -->
+	<section class="page-title" style="background-image: url({% static 'images/background/page-title-bg.png' %});">
+		<div class="auto-container">
+			<div class="title-outer text-center">
+				<h1 class="title">Pricing</h1>
+				<ul class="page-breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="#">Pages</a></li>
+					<li>Pricing</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!-- end main-content -->
+
+  <!-- pricing-section-four -->
+  <section class="pricing-section-four">
+    <div class="auto-container">
+      <div class="row"> 
+        <!-- pricing-block-four -->
+        <div class="pricing-block-four col-md-6 col-lg-4">
+          <div class="inner-box">
+            <div class="content-column">
+              <div class="inner-column wow fadeInLeft">
+                <span class="pricing-title">Single Room</span>
+                <h6 class="pricing-amount"><sup>$</sup>29 <span>Per Room</span></h6>
+                <ul class="list-style-two">
+                  <li><i class="icon fa fa-circle-check"></i>Pick & Drop Service</li>
+                  <li><i class="icon fa fa-circle-check"></i>Swimming Pool</li>
+                  <li><i class="icon fa fa-circle-check"></i>City Tour Guide</li>
+                  <li><i class="icon fa fa-circle-check"></i>Fibre Internet</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Flights Online</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Hotel Rooms</li>
+                </ul>
+                <a href="{% url 'contact' %}" class="book-now btn-style-four">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- pricing-block-four -->
+        <div class="pricing-block-four col-md-6 col-lg-4">
+          <div class="inner-box">
+            <div class="content-column">
+              <div class="inner-column wow fadeInLeft">
+                <span class="pricing-title">Double Room</span>
+                <h6 class="pricing-amount"><sup>$</sup>40 <span>Per Room</span></h6>
+                <ul class="list-style-two">
+                  <li><i class="icon fa fa-circle-check"></i>Pick & Drop Service</li>
+                  <li><i class="icon fa fa-circle-check"></i>Swimming Pool</li>
+                  <li><i class="icon fa fa-circle-check"></i>City Tour Guide</li>
+                  <li><i class="icon fa fa-circle-check"></i>Fibre Internet</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Flights Online</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Hotel Rooms</li>
+                </ul>
+                <a href="{% url 'contact' %}" class="book-now btn-style-four">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- pricing-block-four -->
+        <div class="pricing-block-four col-md-6 col-lg-4">
+          <div class="inner-box">
+            <div class="content-column">
+              <div class="inner-column wow fadeInLeft">
+                <span class="pricing-title">Family Room</span>
+                <h6 class="pricing-amount"><sup>$</sup>99 <span>Per Room</span></h6>
+                <ul class="list-style-two">
+                  <li><i class="icon fa fa-circle-check"></i>Pick & Drop Service</li>
+                  <li><i class="icon fa fa-circle-check"></i>Swimming Pool</li>
+                  <li><i class="icon fa fa-circle-check"></i>City Tour Guide</li>
+                  <li><i class="icon fa fa-circle-check"></i>Fibre Internet</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Flights Online</li>
+                  <li><i class="icon fa fa-circle-check"></i>Book Hotel Rooms</li>
+                </ul>
+                <a href="{% url 'contact' %}" class="book-now btn-style-four">Book Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End pricing-section -->
+ 	{% endblock contents %} 

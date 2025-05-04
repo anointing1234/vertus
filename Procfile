@@ -1,0 +1,1 @@
+web: gunicorn pfootball.wsgi --log-file -
