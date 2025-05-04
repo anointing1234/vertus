@@ -16,7 +16,7 @@ import environ
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,8 +37,8 @@ SECRET_KEY = 'django-insecure-e&-luv@spxwdqa*r=#trru=fbg9962k$te!hmrq$6r_xe@m$e5
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = ["vertus-production.up.railway.app"]
-# CSRF_TRUSTED_ORIGINS = ["https://vertus-production.up.railway.app"]
+# ALLOWED_HOSTS = ["postyourfootballcv.com"]
+# CSRF_TRUSTED_ORIGINS = ["https://postyourfootballcv.com"]
 
 
 # Application definition
@@ -108,25 +108,17 @@ WSGI_APPLICATION = 'vertus_hotels.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE':'django.db.backends.postgresql',
-#         'NAME': env('DB_NAME'),  
-#         'USER': env('DB_USER'),
-#         'PASSWORD': env('DB_PASSWORD'),
-#         'HOST': env('DB_HOST'),
-#         'PORT': env('DB_PORT'),
-#     }
-# }
-
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),  
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -165,12 +157,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 
-if DEBUG:
-   STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
-   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-   STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# if DEBUG:
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# else:
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
