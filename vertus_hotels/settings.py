@@ -34,7 +34,7 @@ environ.Env.read_env(os.path.join(BASE_DIR,'file.env'))
 SECRET_KEY = 'django-insecure-e&-luv@spxwdqa*r=#trru=fbg9962k$te!hmrq$6r_xe@m$e5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = ["vertus-production.up.railway.app"]
