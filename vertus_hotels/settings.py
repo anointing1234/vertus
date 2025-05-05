@@ -36,9 +36,9 @@ SECRET_KEY = 'django-insecure-e&-luv@spxwdqa*r=#trru=fbg9962k$te!hmrq$6r_xe@m$e5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = ["postyourfootballcv.com"]
-# CSRF_TRUSTED_ORIGINS = ["https://postyourfootballcv.com"]
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["vertus-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["vertus-production.up.railway.app"]
 
 
 # Application definition
@@ -101,23 +101,23 @@ WSGI_APPLICATION = 'vertus_hotels.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),  
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE':'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME'),  
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
 
 
 # Password validation
