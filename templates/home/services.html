@@ -32,7 +32,7 @@
           <div class="content-box">
             <div class="inner-box">
               <h4 class="title"><a href="{% url 'room_details' room.id %}">{{ room.get_name_display }}</a></h4>
-              <div class="price">${{ room.price_per_night }}/ Night</div>
+              <div class="price">₦{{ room.price_per_night }}/ Night</div>
             </div>
             <div class="facilities-box align-items-center d-flex justify-content-between">
               <ul class="facilities-list">
