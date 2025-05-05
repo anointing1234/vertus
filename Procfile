@@ -1,1 +1,1 @@
-web: gunicorn vertus_hotels.wsgi --log-file -
+web: gunicorn pfootball.wsgi --log-file -
