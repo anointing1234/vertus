@@ -37,8 +37,8 @@ SECRET_KEY = 'django-insecure-e&-luv@spxwdqa*r=#trru=fbg9962k$te!hmrq$6r_xe@m$e5
 DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ["vertus-production.up.railway.app"]
-CSRF_TRUSTED_ORIGINS = ["https://vertus-production.up.railway.app"]
+ALLOWED_HOSTS = ["vertushotel.online"]
+CSRF_TRUSTED_ORIGINS = ["https://vertushotel.online"]
 
 
 # Application definition
