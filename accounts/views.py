@@ -114,58 +114,56 @@ def contact_view(request):
 
 
 
-
 def contacts_view(request):
+    if request.method != "POST":
+        return JsonResponse({'success': False, 'error': 'Invalid HTTP method.'}, status=405)
+
+    # 1. Parse JSON
     try:
-        # Parse the incoming JSON data from the front-end form
         data = json.loads(request.body)
     except json.JSONDecodeError:
-        return JsonResponse({'success': False, 'error': 'Invalid payload.'}, status=400)
+        return JsonResponse({'success': False, 'error': 'Invalid JSON payload.'}, status=400)
 
-    # Extract data from the JSON payload
+    # 2. Extract & strip all six fields
     name      = data.get('name', '').strip()
     email     = data.get('email', '').strip()
     check_in  = data.get('check_in', '').strip()
     check_out = data.get('check_out', '').strip()
     guests    = data.get('guests', '').strip()
-    room_type = data.get('room_type', '').strip()
-   
+    room      = data.get('room', '').strip()      # ← matches <select name="room">
 
-    # Validate that all fields are provided
-    if not all([name, email, check_in, check_out, guests, room_type]):
-        return JsonResponse({'success': False, 'error': 'All fields are required.'})
+    # 3. Validate
+    if not all([name, email, check_in, check_out, guests, room]):
+        return JsonResponse({
+            'success': False,
+            'error': 'All fields (name, email, check-in, check-out, guests, room) are required.'
+        }, status=400)
 
-    # Subject and body of the email to be sent to the admin
+    # 4. Build subject & bodies (now including room)
     subject = f"[Vertus Hotel & Suite] Booking Request from {name}"
-
-    # Plain-text email body (used for both admin and user emails)
     plain = (
         f"Dear Admin,\n\n"
         f"You have received a new booking request from {name}.\n\n"
         f"Guest Information:\n"
-        f"Name: {name}\n"
-        f"Email: {email}\n"
-        f"Check-In: {check_in}\n"
-        f"Check-Out: {check_out}\n"
-        f"Guests: {guests}\n"
-        f"Room Type: {room_type}\n\n"
+        f"  Name:       {name}\n"
+        f"  Email:      {email}\n"
+        f"  Room:  {room}\n"
+        f"  Check-In:   {check_in}\n"
+        f"  Check-Out:  {check_out}\n"
+        f"  Guests:     {guests}\n\n"
         f"Please take action on this request as soon as possible.\n\n"
-        f"Thank you for choosing Vertus Hotel & Suite."
+        f"Vertus Hotel & Suite"
     )
-
-    # HTML email body for better formatting (used for both admin and user emails)
     html = f"""
     <html><body style="font-family:Arial,sans-serif;color:#333;">
       <div style="max-width:600px;margin:auto;padding:20px;border:1px solid #ddd;">
-        <h2 style="color:#004e64;text-align:center;">
-          New Booking Request
-        </h2>
+        <h2 style="color:#004e64;text-align:center;">New Booking Request</h2>
         <p><strong>Guest Name:</strong> {name}</p>
         <p><strong>Email:</strong> {email}</p>
+        <p><strong>Room:</strong> {room}</p>
         <p><strong>Check-In Date:</strong> {check_in}</p>
         <p><strong>Check-Out Date:</strong> {check_out}</p>
         <p><strong>Number of Guests:</strong> {guests}</p>
-        <p><strong>Room Type:</strong> {room_type}</p>
         <hr>
         <p style="margin-top:30px;font-size:0.9em;color:#555;">
           Thank you for choosing <strong>Vertus Hotel & Suite</strong>. We look forward to welcoming you!
@@ -174,74 +172,73 @@ def contacts_view(request):
     </body></html>
     """
 
-    # Send email to the admin (e.g., hotel management)
+    # 5. Send emails
     try:
-        # Admin's email address should be configured here
+        # Admin email address – define in settings.py:
+        #   ADMIN_EMAIL = 'reservations@vertushotel.online'
+        admin_email = getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)
+
         send_mail(
-            subject,
-            plain,
-            settings.EMAIL_HOST_USER,
-            [settings.DEFAULT_FROM_EMAIL],  # Admin's email address
+            subject=subject,
+            message=plain,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[admin_email],
             html_message=html,
             fail_silently=False,
         )
-        
-        # Send a confirmation email to the user (guest)
+
+        # Confirmation to guest
         subject_user = "Booking Confirmation from Vertus Hotel & Suite"
         plain_user = (
             f"Dear {name},\n\n"
             f"Thank you for your booking request at Vertus Hotel & Suite.\n\n"
-            f"Your request details are as follows:\n"
-            f"Check-In: {check_in}\n"
-            f"Check-Out: {check_out}\n"
-            f"Guests: {guests}\n"
-            f"Room Type: {room_type}\n\n"
-            f"We will contact you soon to confirm your booking.\n\n"
+            f"Your request details:\n"
+            f"  Room :  {room}\n"
+            f"  Check-In:   {check_in}\n"
+            f"  Check-Out:  {check_out}\n"
+            f"  Guests:     {guests}\n\n"
+            f"We will reach out shortly to confirm availability and rates.\n\n"
             f"Best regards,\n"
             f"Vertus Hotel & Suite Team"
         )
-
         html_user = f"""
         <html><body style="font-family:Arial,sans-serif;color:#333;">
           <div style="max-width:600px;margin:auto;padding:20px;border:1px solid #ddd;">
-            <h2 style="color:#004e64;text-align:center;">
-              Booking Confirmation from Vertus Hotel & Suite
-            </h2>
+            <h2 style="color:#004e64;text-align:center;">Booking Confirmation</h2>
             <p><strong>Guest Name:</strong> {name}</p>
+            <p><strong>Room:</strong> {room}</p>
             <p><strong>Check-In Date:</strong> {check_in}</p>
             <p><strong>Check-Out Date:</strong> {check_out}</p>
             <p><strong>Number of Guests:</strong> {guests}</p>
-            <p><strong>Room Type:</strong> {room_type}</p>
             <hr>
             <p style="margin-top:30px;font-size:0.9em;color:#555;">
-              Thank you for choosing <strong>Vertus Hotel & Suite</strong>. We look forward to welcoming you!
+              We’ll be in touch soon to finalize your booking. Thanks for choosing us!
             </p>
           </div>
         </body></html>
         """
-
-        # Send confirmation email to the user
         send_mail(
-            subject_user,
-            plain_user,
-            settings.EMAIL_HOST_USER,
-            [email],  # User's email address
+            subject=subject_user,
+            message=plain_user,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],
             html_message=html_user,
             fail_silently=False,
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Failed to send emails")
         return JsonResponse({
             'success': False,
             'error': 'Unable to process your request right now. Please try again later.'
         }, status=500)
 
-    # Return success response to the frontend
     return JsonResponse({
         'success': True,
-        'message': 'Thank you! Your request has been sent to Vertus Hotel & Suite. A confirmation email has been sent to you.'
+        'message': 'Thank you! Your booking request has been sent, and a confirmation email is on its way.'
     })
+
+
 
 
 
