@@ -499,3 +499,7 @@ def send_message(request):
         'success': True,
         'message': 'Your message has been sent successfully!'
     })
+
+
+def book_views(request):
+    return render(request,'home/book.html')    
