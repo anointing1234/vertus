@@ -34,11 +34,11 @@ environ.Env.read_env(os.path.join(BASE_DIR,'file.env'))
 SECRET_KEY = 'django-insecure-e&-luv@spxwdqa*r=#trru=fbg9962k$te!hmrq$6r_xe@m$e5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-# ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ["vertushotel.online"]
-CSRF_TRUSTED_ORIGINS = ["https://vertushotel.online"]
+ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["vertushotel.online"]
+# CSRF_TRUSTED_ORIGINS = ["https://vertushotel.online"]
 
 
 # Application definition
@@ -260,6 +260,11 @@ UNFOLD = {
                         "title": _("Facilities"),
                         "icon": "local_activity",
                         "link": reverse_lazy("admin:accounts_facility_changelist"),
+                    },
+                     {
+                        "title": _("Bookings"),
+                        "icon": "event_available",
+                        "link": reverse_lazy("admin:accounts_booking_changelist"),
                     },
                 ],
             },

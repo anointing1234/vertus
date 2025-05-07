@@ -18,7 +18,7 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-
+from django_countries.fields import CountryField
 
 
 
@@ -124,3 +124,36 @@ class Room(models.Model):
         return ", ".join([facility.name for facility in self.facilities.all()])
 
    
+
+class Booking(models.Model):
+    # Room and stay details
+    room_type = models.CharField(max_length=100)  # e.g. "Deluxe Room", "Suite"
+    guests = models.PositiveIntegerField()
+    nights = models.PositiveIntegerField()
+    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=12, decimal_places=2)
+    
+    # Billing Information
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    address = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    country = CountryField()
+    check_in = models.DateField(null=True)  # Change to DateField if currently DateTimeField
+    check_out = models.DateField(null=True) 
+
+    # Extra Information
+    special_requests = models.TextField(blank=True, null=True)
+    agreed_to_terms = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.room_type} booking by {self.first_name} {self.last_name}"
+
+    def calculate_total_price(self):
+        return self.nights * self.price_per_night

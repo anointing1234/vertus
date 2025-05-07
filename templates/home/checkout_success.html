@@ -1,0 +1,96 @@
+{% extends "core/base/base_other.html" %}
+{% load static %}
+{% block contents %}
+
+
+<!-- Start main-content -->
+<section class="page-title" style="background-image: url({% static 'images/background/page-title-bg.png' %});">
+    <div class="auto-container">
+        <div class="title-outer text-center">
+            <h1 class="title">Booking confirmed</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Booking confirmed</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- End main-content -->
+
+<section class="py-5 d-flex justify-content-center">
+    <div class="card shadow-sm" style="max-width: 800px; width: 100%;">
+      <div class="card-header text-center bg-light ">
+        <h2 class="mb-0">Thank you, {{ booking.first_name }}!</h2>
+        <p class="mb-0">Your {{ booking.room_type }} has been booked.</p>
+      </div>
+      <div class="card-body">
+        <!-- Booking Details -->
+        <h5 class="card-title">Booking Details</h5>
+        <table class="table table-bordered mb-4">
+          <tbody>
+            <tr>
+              <th scope="row">Booking #</th>
+              <td>{{ booking.id }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Guests</th>
+              <td>{{ booking.guests }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Nights</th>
+              <td>{{ booking.nights }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Total Paid</th>
+              <td>₦{{ booking.total_price|floatformat:2 }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Check in date</th>
+              <td>{{ booking.check_in }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Check out date</th>
+              <td>{{ booking.check_out }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Special Requests</th>
+              <td>{{ booking.special_requests|default:"no special requests" }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <!-- Billing Information -->
+        <h5 class="card-title">Billing Information</h5>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Name</th>
+              <td>{{ booking.first_name }} {{ booking.last_name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Address</th>
+              <td>
+                {{ booking.address }}{% if booking.address2 %}, {{ booking.address2 }}{% endif %}<br>
+                {{ booking.city }}, {{ booking.state }} {{ booking.zip_code }}<br>
+                {{ booking.country.name }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Email</th>
+              <td>{{ booking.email }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Phone</th>
+              <td>{{ booking.phone }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="text-center mt-4">
+          <a href="{% url 'home' %}" class="btn btn-dark">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

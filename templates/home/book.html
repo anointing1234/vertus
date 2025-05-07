@@ -182,6 +182,10 @@
 	</section>
 	<!-- end main-content -->
 
+
+
+
+
 <!--Room Details Start-->
 <section class="blog-details pt-120 pb-120">
   <div class="container">
@@ -193,60 +197,57 @@
           <div class="sidebar__post mb-30">
             <form id="contact_form2" name="contact_form" action="" method="post">
               {% csrf_token %}
-              <div class="row justify-content-center">
-                <!-- keep your existing mb-3 blocks unchanged -->
-                <div class="mb-3">
-                  <label class="form-label">Name</label>
-                  <input type="text" class="form-control bg-white" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control bg-white" id="email" name="email" placeholder="Email Address" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Check In</label>
+              <div class="row">
+                <!-- Check In -->
+                <div class="col-12 mb-3">
+                  <label for="check_in" class="form-label">Check In</label>
                   <input type="date" name="check_in" id="check_in" class="form-control bg-white" placeholder="Arrive Date" required>
                 </div>
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label class="form-label">Check Out</label>
-                    <input type="date" name="check_out" id="check_out" class="form-control bg-white" placeholder="Departure Date" required>
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label class="form-label">Guests</label>
-                    <select class="form-select form-control bg-white" name="guests" id="guests" required>
-                      <option selected disabled value="">Select</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="More">More</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-sm-12">
-                  <div class="mb-3">
-                    <label class="form-label">Room</label>
-                    <select class="form-select form-control bg-white" name="room" id="guests" required>
-                      <option selected disabled value="">Select</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="More">More</option>
-                    </select>
-                  </div>
+                <!-- Check Out -->
+                <div class="col-12 mb-3">
+                  <label for="check_out" class="form-label">Check Out</label>
+                  <input type="date" name="check_out" id="check_out" class="form-control bg-white" placeholder="Departure Date" required>
                 </div>
-              </div>
-    
-              <div class="mb-3">
-                <button type="submit" class="theme-btn btn-style-one w-100" data-loading-text="Please wait...">
-                  <span class="btn-title">Book Now</span>
-                </button>
+
+                <!-- Nights (calculated) -->
+                <div class="col-12 mb-3">
+                  <label for="nights" class="form-label">Nights</label>
+                  <input type="number" name="nights" id="nights" class="form-control bg-white" readonly placeholder="Number of nights">
+                </div>
+
+                <!-- Guests -->
+                <div class="col-12 mb-3">
+                  <label for="guests" class="form-label">Guests</label>
+                  <select class="form-select form-control bg-white" name="guests" id="guests" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="More">More</option>
+                  </select>
+                </div>
+
+                <!-- Room -->
+                <div class="col-12 mb-3">
+                  <label for="room" class="form-label">Room</label>
+                  <select class="form-select form-control bg-white" name="room" id="room" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="More">More</option>
+                  </select>
+                </div>
+
+                <!-- Submit -->
+                <div class="col-12 mb-3">
+                  <button type="submit" class="theme-btn btn-style-one w-100" data-loading-text="Please wait...">
+                    <span class="btn-title">Book Now</span>
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -254,10 +255,23 @@
       </div>
     </div>
   </div>
-</section>
-<!--Room Details End-->
 
-	
+</section>
+<!--Room Details End-->  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  <!-- Main Footer -->
   <footer class="main-footer footer-style-one">
     <!-- Widgets Section -->
@@ -427,76 +441,77 @@
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+      overlay.style.display = 'flex'; // Show the loading animation
 
-      // Show overlay + spinner
-      overlay.style.display = 'flex';
-
-      // Gather form data
       const data = {};
-      new FormData(form).forEach((v,k) => data[k] = v);
+      new FormData(form).forEach((v, k) => data[k] = v);
 
-      try {
-        const res = await fetch("{% url 'contacts_view' %}", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
-          },
-          body: JSON.stringify(data)
-        });
+      // Display a success message for a few seconds
+      const successToast = Toastify({
+        text: 'please wait...',
+        duration: 4000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "linear-gradient(to right, #D4AF37, #AE7D54)",
+        stopOnFocus: true
+      });
 
-        // Check for JSON content-type
-        const contentType = res.headers.get('content-type') || '';
-        let json;
-        if (contentType.includes('application/json')) {
-          json = await res.json();
-        } else {
-          // Dump raw response for debugging
-          const text = await res.text();
-          console.error('Expected JSON, got:', text);
-          throw new Error('Server returned non-JSON response');
+      successToast.showToast();
+
+      // Simulate the animation and then redirect to the "Book Now" page after the animation is finished
+      setTimeout(function() {
+        // Redirect to the 'book_now' URL after the animation
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = "{% url 'book_now' %}";
+
+        // Add CSRF token
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrftoken;
+        hiddenForm.appendChild(csrfInput);
+
+        // Add other form fields
+        for (const key in data) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = data[key];
+          hiddenForm.appendChild(input);
         }
 
-        // Hide spinner
-        overlay.style.display = 'none';
-
-        // Pick toast background
-        const bg = json.success
-          ? "linear-gradient(to right, #D4AF37, #AE7D54)"    // gold → amber
-          : "linear-gradient(to right, #800020, #C04000)";   // burgundy → dark orange
-
-        Toastify({
-          text: json.success ? json.message : (json.error || 'An error occurred.'),
-          duration: 4000,
-          gravity: "top",
-          position: 'right',
-          backgroundColor: bg,
-          stopOnFocus: true
-        }).showToast();
-
-        if (json.success) form.reset();
-
-      } catch (err) {
-        // Hide spinner
-        overlay.style.display = 'none';
-
-        Toastify({
-          text: err.message.includes('non-JSON')
-            ? 'Server error: unexpected response.'
-            : 'Server error, please try again.',
-          duration: 4000,
-          gravity: "top",
-          position: 'right',
-          backgroundColor: "linear-gradient(to right, #800020, #C04000)"
-        }).showToast();
-
-        console.error(err);
-      }
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+      }, 400); // Adjust the duration of the animation before redirecting
     });
   })();
 </script>
 
 
-</script>
+  <!-- JavaScript to calculate nights -->
+  <script>
+    function calculateNights() {
+      const checkInEl = document.getElementById('check_in');
+      const checkOutEl = document.getElementById('check_out');
+      const nightsEl = document.getElementById('nights');
+
+      const checkInDate = new Date(checkInEl.value);
+      const checkOutDate = new Date(checkOutEl.value);
+
+      if (checkInEl.value && checkOutEl.value && checkOutDate > checkInDate) {
+        const diffTime = checkOutDate - checkInDate;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        nightsEl.value = diffDays;
+      } else {
+        nightsEl.value = '';
+      }
+    }
+
+    document.getElementById('check_in').addEventListener('change', calculateNights);
+    document.getElementById('check_out').addEventListener('change', calculateNights);
+  </script>
+
+
 </body>
 </html>

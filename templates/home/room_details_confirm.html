@@ -172,203 +172,141 @@
 	<section class="page-title" style="background-image: url({% static 'images/background/page-title-bg.png' %});">
 		<div class="auto-container">
 			<div class="title-outer text-center">
-				<h1 class="title">Room Details</h1>
+				<h1 class="title">Book Now</h1>
 				<ul class="page-breadcrumb">
 					<li><a href="index.html">Home</a></li>
-					<li>Room Details</li>
+					<li>Book Now</li>
 				</ul>
 			</div>
 		</div>
 	</section>
 	<!-- end main-content -->
 
-	<!--Room Details Start-->
-	<section class="blog-details pt-120 pb-120">
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-8 col-lg-7 product-details rd-page">
-				<div class="bxslider">
-				<div class="slider-content">
-					<figure class="image-box">
-					{% if image_data %}
-						<a href="{{ image_data }}" class="lightbox-image" data-fancybox="gallery">
-						<img src="{{ image_data }}" alt="{{ room.name }}">
-						</a>
-					{% else %}
-						{# Fallback to a static placeholder if no image is available #}
-						<a href="{% static 'images/resource/room-1.jpg' %}" class="lightbox-image" data-fancybox="gallery">
-						<img src="{% static 'images/resource/room-1.jpg' %}" alt="{{ room.name }}">
-						</a>
-					{% endif %}
-					</figure>
-				</div>
-				</div>
-					<div class="room-details__left">
-					    <div class="wrapper">
-							<h3>Description of Room</h3>
-							<p class="text">{{ room.description }}</p>
+    <!--Room Details Confirmation Start-->
+<section class="blog-details pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <!-- Room Details Column -->
+            <div class="col-xl-8 col-lg-7 product-details rd-page">
+                <div class="bxslider">
+                    <div class="slider-content">
+                        <figure class="image-box">
+                            {% if room.image %}
+                                <a href="{{ room.image.url }}" class="lightbox-image" data-fancybox="gallery">
+                                    <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                                </a>
+                            {% else %}
+                                <a href="{% static 'images/resource/room-1.jpg' %}" class="lightbox-image" data-fancybox="gallery">
+                                    <img src="{% static 'images/resource/room-1.jpg' %}" alt="{{ room.name }}">
+                                </a>
+                            {% endif %}
+                        </figure>
+                    </div>
+                </div>
 
-							<div class="row justify-content-center">
-							<div class="col-xl-12">
-								<div class="room-details__content-right mb-40 mt-20">
-								<div class="room-details__details-box">
-									<div class="row">
-									<div class="col-6 col-md-3">
-										<p class="text mb-0">Room Size</p>
-										<h6>{{ room.size }}</h6>
-									</div>
-									<div class="col-6 col-md-3">
-										<p class="text mb-0">Rooms Bed</p>
-										<h6>{{ room.bed_type }}</h6>
-									</div>
-									<div class="col-6 col-md-3">
-										<p class="text mb-0">Occupancy</p>
-										<h6>{{ room.occupancy }}</h6>
-									</div>
-									<div class="col-6 col-md-3">
-										<p class="text mb-0">Category</p>
-										<h6>{{ room.get_name_display }}</h6>
-									</div>
-									</div>
-								</div>
-								</div>
-							</div>
-							</div>
+                <div class="room-details__left">
+                    <div class="wrapper">
+                        <h3>Description of Room</h3>
+                        <p class="text">{{ room.description }}</p>
 
-							
-						</div>
-						<div class="mt-40">
-							<h4 class="mb-3">Room Facilities</h4>
-							<div class="row room-facility-list mb-40">
-							{% for facility in room_facilities %}
-								<div class="col-sm-6 col-xl-4">
-								<div class="list-one d-flex align-items-center me-sm-4 mb-3">
-									<h6 class="title m-0">{{ facility.name }}</h6>
-								</div>
-								</div>
-							{% endfor %}
-							</div>
-						</div>
-					
-						<div class="p-4 p-lg-5 bg-light">
-							<h4 class="mt-0">Send Us Your Question</h4>
-							<form id="contact_form" name="contact_form" action="" method="post">
-							{% csrf_token %}
-							<div class="row">
-								<div class="col-sm-6 col-xl-4">
-								<div class="mb-3">
-									<input name="name" class="form-control bg-white" type="text" placeholder="Enter Name" required>
-								</div>
-								</div>
-								<div class="col-sm-6 col-xl-4">
-								<div class="mb-3">
-									<input name="email" class="form-control bg-white" type="email" placeholder="Enter Email" required>
-								</div>
-								</div>
-								<div class="col-xl-4">
-								<div class="mb-3">
-									<input name="phone" class="form-control bg-white" type="tel" placeholder="Enter Phone" required>
-								</div>
-								</div>
-							</div>
-							<div class="mb-3">
-								<textarea name="message" class="form-control bg-white" rows="5" placeholder="Enter Message" required></textarea>
-							</div>
-							<div class="mb-0">
-								<button type="submit" class="theme-btn btn-style-one" data-loading-text="Please wait...">
-								<span class="btn-title">Submit Comment</span>
-								</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-4 col-lg-5">
-					<div class="sidebar">
-						<div class="sidebar__post mb-30">
-							<form id="contact_form2" name="contact_form" action="" method="post">
-								   {% csrf_token %}
-								<div class="row">
-									<div class="mb-3">
-									<div class="mb-3">
-									     <label class="form-label">Name</label>
-										<input type="text" class="form-control bg-white"  id="name" name="name" placeholder="Your Name" required>
-									</div>
-									<div class="mb-3">
-									    <label class="form-label">Email</label>
-										<input type="email" class="form-control bg-white"  id="email"  name="email" placeholder="Email Address" required>
-									</div>
-										<div class="mb-3">
-											<label class="form-label">Check In</label>
-											<input type="date" name="check_in" id="check_in" class="form-control bg-white" placeholder="Arrive Date" required>
-										</div>
-									</div>
-									<div class="col-sm-12">
-										<div class="mb-3">
-											<label class="form-label">Check Out</label>
-											<input type="date" name="check_out" id="check_out" class="form-control bg-white" placeholder="Departure Date" required>
-										</div>
-									</div>
-									<div class="col-sm-12">
-										<div class="mb-3">
-											<label class="form-label">Guests</label>
-											<select class="form-select form-control bg-white" name="guests" id="guests" required>
-												<option selected disabled value="">Select</option>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="More">More</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								
-    <!-- Hidden Room Type Input -->
-    <input type="hidden" name="room_type" id="room_type" value="{{ room.name }}"> <!-- Default value or can be dynamically set -->
+                        <div class="row justify-content-center">
+                            <div class="col-xl-12">
+                                <div class="room-details__content-right mb-40 mt-20">
+                                    <div class="room-details__details-box">
+                                        <div class="row">
+                                            <div class="col-6 col-md-3">
+                                                <p class="text mb-0">Room Size</p>
+                                                <h6>{{ room.size }}</h6>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <p class="text mb-0">Rooms Bed</p>
+                                                <h6>{{ room.bed_type }}</h6>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <p class="text mb-0">Occupancy</p>
+                                                <h6>{{ room.occupancy }}</h6>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <p class="text mb-0">Category</p>
+                                                <h6>{{ room.get_name_display }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="mb-3">
-        <button type="submit" class="theme-btn btn-style-one w-100" data-loading-text="Please wait..."><span class="btn-title">Book Now</span></button>
+                        <div class="mt-40">
+                            <h4 class="mb-3">Room Facilities</h4>
+                            <div class="row room-facility-list mb-40">
+                                {% for facility in room.facilities.all %}
+                                    <div class="col-sm-6 col-xl-4">
+                                        <div class="list-one d-flex align-items-center me-sm-4 mb-3">
+                                            <h6 class="title m-0">{{ facility.name }}</h6>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Confirmation Sidebar -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="sidebar">
+                    <!-- Booking Summary -->
+                    <div class="sidebar__post mb-30">
+                        <h3 class="sidebar__title">Booking Summary</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <strong>Check-In: </strong> {{ check_in|date:'d M Y'  }}
+                            </li>
+                            <li>
+                                <strong>Check-Out: </strong>   {{ check_out|date:'d M Y' }}
+                            </li>
+                            <li>
+                                <strong>Nights:</strong> {{ nights }}
+                            </li>
+                            <li>
+                                <strong>Guests:</strong> {{ guests }}
+                            </li>
+                            <li>
+                                <strong>Room:</strong> {{ room.name }}
+                            </li>
+                            <li>
+                                <strong>Price Per Night:</strong> ₦{{ room.price_per_night|floatformat:2 }}
+                            </li>
+                            <li>
+                                <strong>Total:</strong> ₦{{ total_price|floatformat:2 }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="sidebar__post">
+                        <form class="booking-form" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="room_id" value="{{ room.id }}">
+                            <input type="hidden" name="check_in" value="{{ check_in }}">
+                            <input type="hidden" name="check_out" value="{{ check_out }}">
+                            <input type="hidden" name="nights" value="{{ nights }}">
+                            <input type="hidden" name="guests" value="{{ guests }}">
+                        
+                            <button type="submit" class="theme-btn btn-style-one w-100">
+                                <span class="btn-title">Proceed</span>
+                            </button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</form>
-						</div>
-				<div class="sidebar__single sidebar__post">
-					<h3 class="sidebar__title">Compare Room</h3>
-					<ul class="sidebar__post-list list-unstyled">
-						{% for other in other_rooms %}
-						<li>
-							<div class="sidebar__post-image">
-							{% if other.image %}
-								<a href="{% url 'room_details' other.id %}">
-								<img src="{{ other.image.url }}" alt="{{ other.get_name_display }}">
-								</a>
-							{% else %}
-								<a href="{% url 'room_details' other.id %}">
-								<img src="{% static 'images/resource/default_room.jpg' %}" alt="{{ other.get_name_display }}">
-								</a>
-							{% endif %}
-							</div>
-							<div class="sidebar__post-content">
-							<h3>
-								<span class="sidebar__post-content-meta">
-								<i class="fas fa-door-open"></i>{{ other.get_name_display }}
-								</span>
-								<a href="{% url 'room_details' other.id %}">
-								₦{{ other.price_per_night }}/Night
-								</a>
-							</h3>
-							</div>
-						</li>
-						{% endfor %}
-					</ul>
-                   </div>
+</section>
+<!--Room Details Confirmation End-->
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--Room Details End-->
+
  <!-- Main Footer -->
   <footer class="main-footer footer-style-one">
     <!-- Widgets Section -->
@@ -501,6 +439,10 @@
 </style>
 
 
+<div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
 
 </div><!-- End Page Wrapper -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{% static 'js/jquery.js' %}"></script>
@@ -521,152 +463,31 @@
 <script src="{% static 'js/jquery.form.min.js' %}"></script>
 
 
-<!-- Full-screen overlay with spinner -->
-<div id="loading-overlay">
-  <div class="spinner"></div>
-</div>
-
-<!-- Toastify CSS & JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-<script>
-  (function(){
-    const form      = document.getElementById('contact_form2');
-    const overlay   = document.getElementById('loading-overlay');
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      // Show overlay + spinner
-      overlay.style.display = 'flex';
-
-      // Gather form data
-      const data = {};
-      new FormData(form).forEach((v,k) => data[k] = v);
-
-      try {
-        const res = await fetch("{% url 'contacts_view' %}", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
-          },
-          body: JSON.stringify(data)
-        });
-
-        // Check for JSON content-type
-        const contentType = res.headers.get('content-type') || '';
-        let json;
-        if (contentType.includes('application/json')) {
-          json = await res.json();
-        } else {
-          // Dump raw response for debugging
-          const text = await res.text();
-          console.error('Expected JSON, got:', text);
-          throw new Error('Server returned non-JSON response');
-        }
-
-        // Hide spinner
-        overlay.style.display = 'none';
-
-        // Pick toast background
-        const bg = json.success
-          ? "linear-gradient(to right, #D4AF37, #AE7D54)"    // gold → amber
-          : "linear-gradient(to right, #800020, #C04000)";   // burgundy → dark orange
-
-        Toastify({
-          text: json.success ? json.message : (json.error || 'An error occurred.'),
-          duration: 4000,
-          gravity: "top",
-          position: 'right',
-          backgroundColor: bg,
-          stopOnFocus: true
-        }).showToast();
-
-        if (json.success) form.reset();
-
-      } catch (err) {
-        // Hide spinner
-        overlay.style.display = 'none';
-
-        Toastify({
-          text: err.message.includes('non-JSON')
-            ? 'Server error: unexpected response.'
-            : 'Server error, please try again.',
-          duration: 4000,
-          gravity: "top",
-          position: 'right',
-          backgroundColor: "linear-gradient(to right, #800020, #C04000)"
-        }).showToast();
-
-        console.error(err);
-      }
-    });
-  })();
-</script>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  
 
 
 <script>
-(function(){
-  const form = document.getElementById('contact_form');
-  const overlay = document.getElementById('loading-overlay');
-  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    overlay.style.display = 'flex';
-
-    const data = {};
-    new FormData(form).forEach((v,k) => data[k]=v);
-
-    try {
-      const res = await fetch("{% url 'submit_comment' %}", {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'X-CSRFToken':csrftoken
-        },
-        body: JSON.stringify(data)
+    (function () {
+      const form = document.querySelector('.booking-form');
+      const overlay = document.getElementById('loading-overlay');
+  
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        overlay.style.display = 'flex';
+  
+        // Wait just a bit for spinner to show, then submit the form
+        setTimeout(() => {
+          form.action = "{% url 'complete_booking' %}";
+          form.submit();
+        }, 400); // 1 second delay to show the spinner
       });
-      const ct = res.headers.get('content-type')||'';
-      if(!ct.includes('application/json')){
-        const text = await res.text();
-        console.error('Expected JSON, got:', text);
-        throw new Error('Unexpected response');
-      }
-      const json = await res.json();
-      overlay.style.display = 'none';
+    })();
+  </script>
+  
 
-      const bg = json.success
-        ? "linear-gradient(to right, #D4AF37, #AE7D54)"
-        : "linear-gradient(to right, #800020, #C04000)";
 
-      Toastify({
-        text: json.success ? json.message : (json.error||'Error'),
-        duration:4000,
-        gravity:'top', position:'right',
-        backgroundColor:bg, stopOnFocus:true
-      }).showToast();
-
-      if(json.success) form.reset();
-    } catch(err){
-      overlay.style.display = 'none';
-      Toastify({
-        text: err.message.includes('Unexpected') 
-          ? 'Server returned an unexpected response.' 
-          : 'Server error, please try again.',
-        duration:4000,
-        gravity:'top', position:'right',
-        backgroundColor:"linear-gradient(to right, #800020, #C04000)"
-      }).showToast();
-      console.error(err);
-    }
-  });
-})();
-</script>
-
-</script>
 </body>
 </html>

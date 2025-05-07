@@ -38,6 +38,14 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import random
 from django.contrib.auth.hashers import make_password
+from accounts.models import Room,Booking
+from django_countries import countries
+from django.utils.html import format_html
+from email.mime.image import MIMEImage
+from django.core.mail import EmailMultiAlternatives
+import os
+from django.template.loader import render_to_string
+
 
 logger = logging.getLogger(__name__)
 
@@ -502,4 +510,414 @@ def send_message(request):
 
 
 def book_views(request):
-    return render(request,'home/book.html')    
+    return render(request,'home/book.html')  
+  
+      
+
+
+def select_room(request):
+    if request.headers.get('Content-Type') == 'application/json':
+        try:
+            data = json.loads(request.body)
+            check_in  = data.get('check_in')
+            check_out = data.get('check_out')
+            guests    = data.get('guests')
+            room      = data.get('room')
+
+            if not all([check_in, check_out, guests, room]):
+                return JsonResponse({'success': False, 'error': 'Missing required fields'})
+
+            # You can add additional validation if needed
+
+            return JsonResponse({'success': True, 'message': 'Room selection validated.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+
+
+
+
+
+
+def book_now(request):
+    if request.method == 'POST':
+        check_in_str  = request.POST.get('check_in')
+        check_out_str = request.POST.get('check_out')
+        nights        = request.POST.get('nights')
+        guests        = request.POST.get('guests')
+        room          = request.POST.get('room')
+
+        # Convert strings to datetime objects
+        try:
+            check_in = datetime.strptime(check_in_str, "%Y-%m-%d")
+        except (ValueError, TypeError):
+            check_in = None
+
+        try:
+            check_out = datetime.strptime(check_out_str, "%Y-%m-%d")
+        except (ValueError, TypeError):
+            check_out = None
+
+        rooms = Room.objects.all()
+        context = {
+            'check_in':  check_in,
+            'check_out': check_out,
+            'nights':    nights,
+            'guests':    guests,
+            'room':      room,
+            'rooms':     rooms,
+        }
+        return render(request, 'home/selection.html', context)
+
+    return redirect('home')
+
+
+
+
+
+
+def select(request):
+    if request.method == "POST" and request.content_type == "application/json":
+        try:
+            data = json.loads(request.body)
+            check_in  = data.get('check_in')
+            check_out = data.get('check_out')
+            guests    = data.get('guests')
+            room_id   = data.get('room_id')  # more explicit name
+            
+            print(data)
+
+            if not all([check_in, check_out, guests, room_id]):
+                return JsonResponse({'success': False, 'error': 'Missing required fields'}, status=400)
+
+            # You can add actual room lookup or validation here
+
+            return JsonResponse({'success': True, 'message': 'Room selection validated.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+
+
+
+def booking_confirm(request):
+    if request.method == 'POST':
+        check_in_str  = request.POST.get('check_in')
+        check_out_str = request.POST.get('check_out')
+        nights        = int(request.POST.get('nights'))  # Convert nights to an integer
+        guests        = request.POST.get('guests')
+        room_id       = request.POST.get('room_id')
+        
+        
+        try:
+            check_in = datetime.strptime(check_in_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_in = None
+
+        try:
+            check_out = datetime.strptime(check_out_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_out = None
+            
+        
+        print(check_in,check_out)
+
+        # Get the specific room object
+        room = get_object_or_404(Room, id=room_id)
+
+        # Calculate the total price
+        total_price = room.price_per_night * nights
+
+        context = {
+            'check_in':  check_in,
+            'check_out': check_out,
+            'nights':    nights,
+            'guests':    guests,
+            'room':      room,
+            'total_price': total_price,
+        }
+
+        return render(request, 'home/room_details_confirm.html', context)
+      
+      
+      
+      
+
+def complete_booking(request):
+    if request.method == 'POST':
+        check_in_str = request.POST.get('check_in')
+        check_out_str = request.POST.get('check_out')
+        nights = int(request.POST.get('nights'))
+        guests = request.POST.get('guests')
+        room_id = request.POST.get('room_id')
+        
+        print(f"Raw check_in_str: {repr(check_in_str)}")
+        print(f"Raw check_out_str: {repr(check_out_str)}")
+
+
+        try:
+            check_in = datetime.strptime(check_in_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_in = None
+
+        try:
+            check_out = datetime.strptime(check_out_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_out = None
+
+        print(check_in, check_out)
+
+       
+        
+       
+
+        room = get_object_or_404(Room, id=room_id)
+       
+        # Calculate the total price
+        total_price = room.price_per_night * nights
+
+
+        context = {
+            'check_in': check_in,
+            'check_out': check_out,
+            'nights': nights,
+            'guests': guests,
+            'room': room,
+            'countries': countries,
+            'total_price': total_price,
+        }
+        return render(request, 'home/checkout.html', context)
+    return redirect('home')  # or some fallback page    
+  
+
+def checkout_view(request):
+    if request.method == 'POST':
+        # Collect form data
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        address2 = request.POST.get('address2')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zip_code = request.POST.get('zip_code')
+        country = request.POST.get('country')
+        special_requests = request.POST.get('special_requests')
+        agreed_to_terms = request.POST.get('terms-checkbox') == 'on'
+
+        room_type = request.POST.get('room_type')
+        guests = int(request.POST.get('guests', 0))
+        nights = int(request.POST.get('nights', 0))
+        check_in_str = request.POST.get('check_in')
+        check_out_str = request.POST.get('check_out')
+        price_per_night = Decimal(request.POST.get('price_per_night', '0.00'))
+        total_price = price_per_night * nights
+        
+        # Convert check-in and check-out strings to datetime
+        try:
+            check_in_in = datetime.strptime(check_in_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_in_in = None
+
+        try:
+            check_out_ou = datetime.strptime(check_out_str, "%B %d, %Y, midnight")
+        except (ValueError, TypeError):
+            check_out_ou = None
+
+        # Save booking
+        booking = Booking.objects.create(
+            room_type=room_type,
+            guests=guests,
+            nights=nights,
+            price_per_night=price_per_night,
+            total_price=total_price,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=phone,
+            address=address,
+            address2=address2,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            country=country,
+            special_requests=special_requests,
+            agreed_to_terms=agreed_to_terms,
+            check_in=check_in_in,
+            check_out=check_out_ou,
+        )
+
+        # Special requests formatting
+        special_requests_row = f'<tr><td style="padding:10px; border:1px solid #ddd; font-weight:bold; background-color:#f1f1f1;">Special Requests</td><td style="padding:10px; border:1px solid #ddd;">{special_requests}</td></tr>' if special_requests else ''
+
+        # Prepare email HTML message
+        html_message = render_to_string('home/emails/emails/booking_confirmation.html', {
+            'booking': booking,
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+            'phone': phone,
+            'address': address,
+            'address2': address2,
+            'city': city,
+            'state': state,
+            'zip_code': zip_code,
+            'country': country,
+            'special_requests': special_requests,
+            'special_requests_row': special_requests_row,
+            'room_type': room_type,
+            'guests': guests,
+            'nights': nights,
+            'price_per_night': price_per_night,
+            'total_price': total_price,
+            'check_in': check_in_in.strftime('%B %d, %Y'),  # Formatting date for email
+            'check_out': check_out_ou.strftime('%B %d, %Y') if check_out_ou else "N/A",  # Optional check-out formatting
+        })
+
+        # Send email
+        email_msg = EmailMultiAlternatives(
+            subject="Your Booking Confirmation – Vertus Hotel and Suites",
+            body="",
+            from_email=settings.EMAIL_HOST_USER,
+            to=[email],
+        )
+        email_msg.attach_alternative(html_message, "text/html")
+        email_msg.mixed_subtype = 'related'
+
+        # Attach logo image
+        logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'logo-2.png')
+        try:
+            with open(logo_path, 'rb') as f:
+                logo = MIMEImage(f.read())
+                logo.add_header('Content-ID', '<logo.png>')
+                email_msg.attach(logo)
+            email_msg.send()
+        except Exception as e:
+            print("Error sending booking email:", e)
+
+        return redirect('booking_success', booking_id=booking.id)
+
+    return render(request, 'home/checkout.html')
+  
+
+def booking_success(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id)
+
+    # Admin email content
+    html_message_admin = format_html(
+        """
+        <div style="font-family: 'Helvetica', sans-serif; color: #333; line-height: 1.6; padding: 30px; text-align: center; background-color: #f8f8f8; margin: 0;">
+            <img src="cid:logo.png" alt="Vertus Hotel Logo" style="width:120;height:auto; margin-bottom: 20px;">
+            
+            <h2 style="color: #1a1a1a; font-size: 30px; font-weight: bold;">New Booking – Vertus Hotel and Suites</h2>
+            <h3 style="color: #007bff; margin-top: 20px;">NEW BOOKING DETAILS</h3>
+            
+            <table style="width: 100%; margin: 20px 0; border-collapse: collapse; font-size: 16px;">
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Booking Number</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{booking_id}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Room Type</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{room_type}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Guests</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{guests}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Nights</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{nights}</td>
+                </tr>
+                    <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Check in date</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{check_in_date}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Check out date</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{check_out_date}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Total Price</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">₦{total_price}</td>
+                </tr>
+            </table>
+
+            <h3 style="color: #007bff;">Customer Details</h3>
+            <table style="width: 100%; margin: 20px 0; border-collapse: collapse; font-size: 16px;">
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Full Name</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{first_name} {last_name}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Email</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{email}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Phone</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{phone}</td>
+                </tr>
+            </table>
+
+            <h3 style="color: #007bff;">Booking Notes</h3>
+            {special_requests_row}
+
+            <p style="font-size: 14px; color: #555;">
+                Please process the booking as soon as possible and update the system with any changes.<br>
+                For inquiries or issues with this booking, contact the customer at {email}.
+            </p>
+
+            <p style="font-size: 14px; color: #555;">
+                Best regards,<br>
+                <strong>Vertus Hotel and Suites</strong><br>
+                <small style="color: #777;">For any inquiries, please contact us at support@vertushotel.com</small>
+            </p>
+        </div>
+        """,
+        booking_id=booking.id,
+        room_type=booking.room_type,
+        guests=booking.guests,
+        nights=booking.nights,
+        total_price=f"{booking.total_price:,.2f}",
+        first_name=booking.first_name,
+        last_name=booking.last_name,
+        email=booking.email,
+        phone=booking.phone,
+        check_in_date=booking.check_in,
+        check_out_date=booking.check_out,
+        special_requests_row=(
+            f'<tr><td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; background-color: #f1f1f1;">Special Requests</td>'
+            f'<td style="padding: 10px; border: 1px solid #ddd;">{booking.special_requests}</td></tr>'
+            if booking.special_requests else ''
+        )
+    )
+
+    # Send email to hotel admin
+    admin_email = 'admin@vertushotel.com'  # Replace with actual admin email
+    email_msg_admin = EmailMultiAlternatives(
+        subject="New Booking – Vertus Hotel and Suites",
+        body="",
+        from_email=settings.EMAIL_HOST_USER,
+        to=[settings.DEFAULT_FROM_EMAIL],
+    )
+    email_msg_admin.attach_alternative(html_message_admin, "text/html")
+    email_msg_admin.mixed_subtype = 'related'
+
+    # Attach logo
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'logo-2.png')
+    try:
+        with open(logo_path, 'rb') as f:
+            logo_image = MIMEImage(f.read())
+            logo_image.add_header('Content-ID', '<logo.png>')
+            logo_image.add_header('Content-Disposition', 'inline', filename='logo.png')
+            email_msg_admin.attach(logo_image)
+        email_msg_admin.send()
+    except Exception as e:
+        print(f"Error sending admin email: {e}")
+
+    return render(request, 'home/checkout_success.html', {
+        'booking': booking,
+    })

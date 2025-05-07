@@ -26,12 +26,12 @@
         <div class="inner-box">
           <div class="image-box">
             <figure class="image mb-0">
-              <a href="{% url 'room_details' room.id %}"><img src="{{ room.image.url }}" alt=""></a>
+              <a href="{% url 'book' %}"><img src="{{ room.image.url }}" alt=""></a>
             </figure>
           </div>
           <div class="content-box">
             <div class="inner-box">
-              <h4 class="title"><a href="{% url 'room_details' room.id %}">{{ room.get_name_display }}</a></h4>
+              <h4 class="title"><a href="{% url 'book' %}">{{ room.get_name_display }}</a></h4>
               <div class="price">₦{{ room.price_per_night }}/ Night</div>
             </div>
             <div class="facilities-box align-items-center d-flex justify-content-between">

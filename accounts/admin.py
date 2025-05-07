@@ -4,7 +4,7 @@ from unfold.admin import ModelAdmin as UnfoldModelAdmin
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.html import format_html
-from .models import Account,Room, Facility
+from .models import Account,Room, Facility,Booking
 
 
 
@@ -125,3 +125,37 @@ class RoomAdmin(UnfoldModelAdmin):
         return "No image"
 
     room_image.short_description = "Image"
+    
+    
+    
+    
+@admin.register(Booking)
+class BookingAdmin(UnfoldModelAdmin):
+    list_display = (
+        'full_name',
+        'room_type',
+        'guests',
+        'nights',
+        'price_per_night',
+        'total_price',
+        'country',
+        'agreed_to_terms',
+        'date_created',
+    )
+    list_filter = ('room_type', 'country', 'agreed_to_terms', 'date_created')
+    search_fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'room_type',
+    )
+    ordering = ('-date_created',)
+    readonly_fields = ('total_price', 'date_created')
+
+    def full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+    full_name.short_description = "Customer"    

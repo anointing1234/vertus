@@ -6,6 +6,7 @@ dj-database-url==2.3.0
 Django==5.2
 django-countries==7.6.1
 django-environ==0.12.0
+django-localflavor==4.0
 django-multiselectfield==0.1.13
 django-phonenumber-field==8.1.0
 django-unfold==0.54.0
@@ -14,6 +15,7 @@ idna==3.10
 packaging==24.2
 pillow==11.1.0
 psycopg2-binary==2.9.10
+python-stdnum==2.0
 pytz==2025.2
 requests==2.32.3
 soupsieve==2.6
